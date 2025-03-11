@@ -3,37 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OpenManus Local Version</title>
+    <title>OpenManus Gemini Edition</title>
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
     <div class="container">
-        <div class="history-panel">
-            <h2>History Tasks</h2>
+        <div class="sidebar">
+            <h2>🤖 Model Selection</h2>
+            <select id="model-selector">
+                <option value="gemini-pro">Gemini Pro</option>
+                <option value="gemini-pro-vision">Gemini Pro Vision</option>
+            </select>
+            
+            <h2>📜 History</h2>
             <div id="task-list" class="task-list"></div>
         </div>
 
         <div class="main-panel">
-            <div id="task-container" class="task-container">
+            <div id="chat-container" class="chat-container">
                 <div class="welcome-message">
-                    <h1>Welcome to OpenManus Local Version</h1>
-                    <p>Please enter a task prompt to start a new task</p>
+                    <h1>Welcome to OpenManus Gemini Edition</h1>
+                    <p>Enhanced with Google's Gemini AI</p>
                 </div>
-                <div id="log-container" class="step-container"></div>
+                <div id="messages-container"></div>
             </div>
 
-            <div id="input-container" class="input-container">
-                <input
-                    type="text"
-                    id="prompt-input"
-                    placeholder="Enter task prompt..."
-                    onkeypress="if(event.keyCode === 13) createTask()"
-                >
-                <button onclick="createTask()">Create Task</button>
+            <div class="input-area">
+                <textarea id="prompt-input" placeholder="Enter your message..."></textarea>
+                <button id="send-button">Send</button>
+                <button id="attach-button">📎 Attach</button>
             </div>
         </div>
     </div>
-
-    <script src="/static/main.js"></script>
 </body>
 </html>

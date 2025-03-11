@@ -1,7 +1,7 @@
 import threading
 import tomllib
 from pathlib import Path
-from typing import Dict
+from typing import Dict, Optional
 
 from pydantic import BaseModel, Field
 
@@ -15,18 +15,28 @@ PROJECT_ROOT = get_project_root()
 WORKSPACE_ROOT = PROJECT_ROOT / "workspace"
 
 
-class LLMSettings(BaseModel):
+class BaseLLMSettings(BaseModel):
     model: str = Field(..., description="Model name")
-    base_url: str = Field(..., description="API base URL")
     api_key: str = Field(..., description="API key")
     max_tokens: int = Field(4096, description="Maximum number of tokens per request")
-    temperature: float = Field(1.0, description="Sampling temperature")
-    api_type: str = Field(..., description="AzureOpenai or Openai")
-    api_version: str = Field(..., description="Azure Openai version if AzureOpenai")
+    temperature: float = Field(0.0, description="Sampling temperature")
+    api_type: str = Field("openai", description="API type (openai, azure, or gemini)")
+    api_version: Optional[str] = Field(None, description="API version (required for Azure)")
+    base_url: str = Field("https://api.openai.com/v1", description="API base URL")
+
+
+class GeminiSettings(BaseLLMSettings):
+    model: str = Field("gemini-pro", description="Model name")
+    api_type: str = Field("gemini", description="API type")
+    base_url: str = Field("", description="Not used for Gemini")
+
+
+class LLMSettings(BaseLLMSettings):
+    pass
 
 
 class AppConfig(BaseModel):
-    llm: Dict[str, LLMSettings]
+    llm: Dict[str, GeminiSettings | LLMSettings]
 
 
 class Config:
@@ -74,12 +84,9 @@ class Config:
 
         default_settings = {
             "model": base_llm.get("model"),
-            "base_url": base_llm.get("base_url"),
             "api_key": base_llm.get("api_key"),
             "max_tokens": base_llm.get("max_tokens", 4096),
             "temperature": base_llm.get("temperature", 1.0),
-            "api_type": base_llm.get("api_type", ""),
-            "api_version": base_llm.get("api_version", ""),
         }
 
         config_dict = {
@@ -95,7 +102,7 @@ class Config:
         self._config = AppConfig(**config_dict)
 
     @property
-    def llm(self) -> Dict[str, LLMSettings]:
+    def llm(self) -> Dict[str, GeminiSettings]:
         return self._config.llm
 
 

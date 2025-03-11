@@ -163,3 +163,40 @@ OpenManus is built by contributors from MetaGPT. Huge thanks to this agent commu
   howpublished = {\url{https://github.com/mannaandpoem/OpenManus}},
 }
 ```
+
+# OpenManus Gemini Edition
+
+Uma versão aprimorada do OpenManus, focada em utilizar o poder do Google Gemini com uma interface moderna e intuitiva.
+
+## Diferenciais
+
+- 🤖 Suporte nativo ao Google Gemini
+- 💻 Interface moderna e responsiva
+- 🖼️ Suporte a processamento de imagens via Gemini Pro Vision
+- ⚡ Performance otimizada
+- 💰 Custos reduzidos comparado a outras APIs
+
+## Instalação
+
+```bash
+pip install openmanus-gemini
+```
+
+## Configuração
+
+1. Obtenha sua API key do Google AI Studio
+2. Configure seu arquivo `config.toml`:
+
+```toml
+[llm.gemini]
+model = "gemini-pro"
+api_key = "sua-api-key"
+```
+
+## Uso
+
+```bash
+openmanus-gemini serve
+```
+
+Acesse http://localhost:8000 para usar a interface web.
