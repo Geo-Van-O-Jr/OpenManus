@@ -178,3 +178,6 @@ data/
 
 # Workspace
 workspace/
+
+# Adicionar ao .gitignore existente
+config/config.toml
